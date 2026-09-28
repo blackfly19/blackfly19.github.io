@@ -27,7 +27,7 @@
       --rule: #eaeaea;
       --dots: #cfcfcf;
       --chip: #f3f2ef;
-      --card: #fcfcfb;
+      --card: #f6f5f2;
       --accent: #e5533d;
       --photo-bg: #fbe9e5;
       --term-bg: #1c1c1e;
@@ -43,7 +43,7 @@
         --rule: #262626;
         --dots: #3a3a3a;
         --chip: #1f1f1f;
-        --card: #171717;
+        --card: #1b1b1b;
         --accent: #ff7a63;
         --photo-bg: #2a1d1a;
         --term-bg: #0b0b0c;
@@ -57,7 +57,7 @@
       --rule: #262626;
       --dots: #3a3a3a;
       --chip: #1f1f1f;
-      --card: #171717;
+      --card: #1b1b1b;
       --accent: #ff7a63;
       --photo-bg: #2a1d1a;
       --term-bg: #0b0b0c;
@@ -101,21 +101,23 @@
     /* ---------- Side column ---------- */
     .photo {
       position: relative;
-      width: 96px;
-      height: 96px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      flex-shrink: 0;
       border-radius: 50%;
       background: var(--photo-bg);
       color: var(--accent);
       display: grid;
       place-items: center;
       font-weight: 600;
-      font-size: 1.8rem;
+      font-size: 3.2rem;
       letter-spacing: -0.02em;
       overflow: hidden;
       box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--rule);
       margin-bottom: 24px;
     }
-    .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+    .id { display: flex; flex-direction: column; width: max-content; max-width: 100%; }
     h1 { font-size: 2.4rem; font-weight: 600; letter-spacing: -0.035em; line-height: 1.15; }
     .role { margin-top: 6px; color: var(--muted); font-size: 1.05rem; }
     .typed {
@@ -161,7 +163,7 @@
     .toc a:hover::before, .toc a.active::before { width: 56px; }
     .toc a.active::before { background: var(--accent); }
 
-    .side-bottom { margin-top: auto; display: flex; align-items: center; gap: 22px; }
+    .side-bottom { margin-top: auto; padding-top: 16px; display: flex; align-items: center; gap: 22px; }
     .social { display: flex; gap: 18px; }
     .social a {
       color: var(--muted);
@@ -199,17 +201,12 @@
     section { scroll-margin-top: 40px; }
     section + section { margin-top: 88px; }
     h2 {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
       margin-bottom: 20px;
     }
-    h2::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
 
     .about p { color: var(--body); font-size: 1.02rem; }
     .about p + p { margin-top: 16px; }
@@ -217,13 +214,12 @@
     /* Project cards */
     .projects, .cards { display: grid; gap: 20px; }
     .card {
-      border: 1px solid var(--rule);
-      border-radius: 14px;
+      border-radius: 16px;
       background: var(--card);
       overflow: hidden;
     }
     .card-body { padding: 22px 24px 24px; }
-    .card-top { display: flex; align-items: baseline; gap: 12px; }
+    .card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
     .card p { color: var(--body); font-size: 0.97rem; margin-top: 8px; }
     .card p + p { margin-top: 10px; }
     .card .sub { margin-top: 1px; }
@@ -231,9 +227,9 @@
     .tags span {
       font-size: 0.78rem;
       color: var(--muted);
-      border: 1px solid var(--rule);
+      background: var(--bg);
       border-radius: 999px;
-      padding: 1px 10px;
+      padding: 2px 10px;
     }
 
     /* Terminal visual */
@@ -261,12 +257,12 @@
     .term .c { color: var(--term-muted); }
 
     /* Entries (work, education) */
-    .entry { padding: 22px 0; }
+    .entry { padding: 10px 0; }
     .entry:first-of-type { padding-top: 4px; }
-    .entry + .entry { border-top: 1px solid var(--rule); }
-    .entry-top { display: flex; align-items: baseline; gap: 12px; }
+    .entry + .entry { margin-top: 8px; }
+    .entry-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
     .name { font-weight: 600; white-space: nowrap; }
-    .dots { flex: 1; border-bottom: 1px dotted var(--dots); transform: translateY(-4px); min-width: 16px; }
+    .dots { display: none; }
     .aside { color: var(--muted); font-size: 0.88rem; white-space: nowrap; }
     .sub { color: var(--muted); font-size: 0.9rem; }
     .entry p { color: var(--body); font-size: 0.97rem; margin-top: 8px; }
@@ -296,8 +292,7 @@
     /* Contact form */
     .contact-intro { color: var(--body); margin-bottom: 22px; }
     .contact-form {
-      border: 1px solid var(--rule);
-      border-radius: 14px;
+      border-radius: 16px;
       background: var(--card);
       padding: 24px;
       display: grid;
@@ -354,6 +349,27 @@
       .caret { animation: none; }
     }
 
+    /* ---------- Shorter laptop screens: tighten the left column ---------- */
+    @media (min-width: 961px) and (max-height: 920px) {
+      .side { padding-top: 56px; padding-bottom: 36px; }
+      .photo { margin-bottom: 20px; }
+      .typed { margin-top: 14px; }
+      .toc { margin-top: 28px; }
+      .toc li + li { margin-top: 0; }
+      .toc a { padding: 4px 0; }
+    }
+    @media (min-width: 961px) and (max-height: 740px) {
+      .side { padding-top: 40px; padding-bottom: 28px; }
+      .photo { width: 190px; margin-bottom: 16px; }
+      .typed { margin-top: 10px; }
+      .toc { margin-top: 20px; }
+      .toc a { padding: 3px 0; }
+    }
+    @media (min-width: 961px) and (max-height: 660px) {
+      .side { overflow-y: auto; }
+      .photo { width: 140px; }
+    }
+
     /* ---------- Smaller screens: stack the columns ---------- */
     @media (max-width: 960px) {
       .layout { grid-template-columns: 1fr; gap: 0; padding: 0 24px; max-width: 680px; }
@@ -364,7 +380,7 @@
     }
     @media (max-width: 560px) {
       .side { padding-top: 56px; }
-      .photo { width: 76px; height: 76px; font-size: 1.4rem; }
+      .photo { font-size: 2.6rem; }
       h1 { font-size: 2rem; }
       .name { white-space: normal; }
       .skill-row { grid-template-columns: 1fr; gap: 8px; }
@@ -382,8 +398,10 @@
     <!-- ================= Left column ================= -->
     <aside class="side">
       <!-- Add a square photo named photo.jpg to the repo and it will show here. Until then, your initials show. -->
-      <div class="photo">AC<img src="photo.jpg" alt="Ankit Chawla" onerror="this.remove()" /></div>
-      <h1>Ankit Chawla</h1>
+      <div class="id">
+        <div class="photo">AC<img src="photo.jpg" alt="Ankit Chawla" onerror="this.remove()" /></div>
+        <h1>Ankit Chawla</h1>
+      </div>
       <p class="role">Software engineer · Melbourne</p>
       <p class="typed" aria-label="I build backend systems, developer tools, and things to see how they work.">
         <span aria-hidden="true">I build <span class="word" id="typed-word">backend systems</span><span class="caret"></span></span>
@@ -647,6 +665,11 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (form._honey.value) return; // bots fill the hidden field
+        if (location.protocol === "file:") {
+          status.className = "form-status err";
+          status.textContent = "The form only works once the site is live online, not when opened as a file on your computer.";
+          return;
+        }
         btn.disabled = true;
         status.className = "form-status";
         status.textContent = "Sending…";
@@ -663,6 +686,9 @@
               form.reset();
               status.className = "form-status ok";
               status.textContent = "Thanks! Your message is on its way.";
+            } else if (res.j && /activat/i.test(res.j.message || "")) {
+              status.className = "form-status err";
+              status.textContent = "This form hasn't been activated yet. Check the inbox of the site owner for an activation email from FormSubmit.";
             } else {
               throw new Error("failed");
             }
