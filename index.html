@@ -256,6 +256,46 @@
     .term .p { color: var(--accent); }
     .term .c { color: var(--term-muted); }
 
+    /* Short highlight bullets */
+    .points { list-style: none; margin-top: 10px; display: grid; gap: 6px; }
+    .points li { position: relative; padding-left: 18px; color: var(--body); font-size: 0.95rem; line-height: 1.55; }
+    .points li::before {
+      content: ""; position: absolute; left: 2px; top: 0.62em;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    }
+    .track .name { white-space: normal; }
+
+    /* ---------- Swipeable rows (Work, Projects) ---------- */
+    .track {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 84%;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+      border-radius: 16px;
+    }
+    .track::-webkit-scrollbar { display: none; }
+    .track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .track > .card { scroll-snap-align: start; display: flex; flex-direction: column; }
+    .track > .card > .card-body { flex: 1; display: flex; flex-direction: column; }
+    .track > .card .tags { margin-top: auto; padding-top: 14px; }
+    .car-nav { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+    .car-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--rule); background: var(--bg); color: var(--text);
+      display: grid; place-items: center; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+    }
+    .car-btn svg { width: 18px; height: 18px; }
+    .car-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .car-btn:disabled { opacity: 0.35; cursor: default; }
+    .car-count { font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: center; }
+
     /* Entries (work, education) */
     .entry { padding: 10px 0; }
     .entry:first-of-type { padding-top: 4px; }
@@ -385,6 +425,7 @@
       .name { white-space: normal; }
       .skill-row { grid-template-columns: 1fr; gap: 8px; }
       .field-row { grid-template-columns: 1fr; }
+      .track { grid-auto-columns: 88%; gap: 12px; }
       .contact-form { padding: 20px; }
       .skill-row h3 { padding-top: 0; }
       .card-body { padding: 20px; }
@@ -439,119 +480,150 @@
     <main class="content">
       <section id="about" class="about reveal">
         <h2>About</h2>
-        <p>I'm a software engineer who mostly works on the backend: APIs, data platforms, and the cloud infrastructure that keeps services running. I spent two years at Bank of America, and before that I worked on Fission, an open-source serverless framework for Kubernetes.</p>
-        <p>Outside of work, I like picking a tool I use every day and building a small version of it myself. It's the best way I've found to understand how something really works, and it's how most of the projects below started.</p>
+        <p>I'm a backend engineer who likes working close to the infrastructure: APIs, data platforms and the cloud systems that keep them running. I spent two years at Bank of America and contributed to Fission, an open-source serverless framework for Kubernetes.</p>
+        <p>Outside of work I rebuild tools I use every day to see how they really work, which is where most of the projects below come from.</p>
       </section>
 
       <section id="work" class="reveal">
         <h2>Work</h2>
-        <div class="cards">
+        <div class="carousel" data-carousel>
+        <div class="track" tabindex="0" aria-label="Work experience, scroll sideways for more">
+          <article class="card"><div class="card-body">
+            <div class="card-top"><span class="name">Stile Education</span><span class="aside">2026</span></div>
+            <div class="sub">Software Engineer · Industry project through RMIT</div>
+            <p>Built the backend for an AI tool that writes science test questions from lesson content.</p>
+            <ul class="points">
+              <li>Two LLM agents: one writes questions, the other critiques them</li>
+              <li>Led the prompt engineering and designed the quality scoring model</li>
+              <li>Cut question writing from hours to minutes</li>
+            </ul>
+            <div class="tags"><span>Python</span><span>Flask</span><span>LLM agents</span></div>
+          </div></article>
 
-        <article class="card"><div class="card-body">
-          <div class="card-top"><span class="name">Stile Education</span><span class="dots"></span><span class="aside">2026</span></div>
-          <div class="sub">Software Engineer · Industry project through RMIT</div>
-          <p>Stile makes science lessons for schools, and teachers were spending hours writing test questions for them by hand. In a team of five, I built the Python and Flask backend for a tool that reads lesson content and generates curriculum-aligned questions automatically.</p>
-          <p>It uses two AI agents: one writes the questions and the other critiques them. I led the prompt engineering for both, tuning them to produce questions that match the curriculum and suit each year level, and proposed the scoring model that decides which questions are good enough to keep. Together, these turned a job that took hours into one that takes minutes.</p>
-          <div class="tags"><span>Python</span><span>Flask</span><span>LLM agents</span><span>Prompt engineering</span></div>
-        </div></article>
+          <article class="card"><div class="card-body">
+            <div class="card-top"><span class="name">Bank of America</span><span class="aside">2022 – 2024</span></div>
+            <div class="sub">Software Engineer · Foreign exchange analytics</div>
+            <p>Backend engineer on the platform the FX team uses to analyse trading data.</p>
+            <ul class="points">
+              <li>Took a key dashboard's load time from minutes to seconds</li>
+              <li>Built a backup tool so hand-kept reference tables could be recovered after a failure</li>
+              <li>Helped move the platform through a major migration</li>
+            </ul>
+            <div class="tags"><span>Java</span><span>SQL</span><span>Impala</span><span>Spark</span></div>
+          </div></article>
 
-        <article class="card"><div class="card-body">
-          <div class="card-top"><span class="name">Bank of America</span><span class="dots"></span><span class="aside">2022 – 2024</span></div>
-          <div class="sub">Software Engineer · Foreign exchange data analytics</div>
-          <p>I worked on the backend of the platform the bank's foreign exchange team uses to analyse trading data. It's a big-data system built on Java, SQL and Impala, with Spark and Hadoop pipelines feeding it.</p>
-          <p>One of the things I'm proudest of is taking a key analytics dashboard from minutes to load down to seconds by reworking the queries behind it. I also built a Java tool that backs up important reference tables the team maintained by hand, so they could be fully recovered if a server failed. Along the way I helped move the platform through a major migration and built new analysis tools as the team's needs changed.</p>
-          <div class="tags"><span>Java</span><span>SQL</span><span>Impala</span><span>Spark</span><span>Hadoop</span></div>
-        </div></article>
-
-        <article class="card"><div class="card-body">
-          <div class="card-top"><span class="name">InfraCloud</span><span class="dots"></span><span class="aside">2021 – 2022</span></div>
-          <div class="sub">Software Engineer Intern · Fission</div>
-          <p>InfraCloud maintains <a href="https://fission.io" target="_blank" rel="noopener">Fission</a>, a framework for running serverless functions on Kubernetes, and I worked on it full time. I rebuilt its monitoring so every core service reports request counts and response times to Prometheus, made its message-queue triggers react to changes instantly instead of checking every five seconds, and added a new <code>fission archive</code> command for managing stored code packages.</p>
-          <p>I also fixed a bug where requests could be sent to function pods that had already died, and locked down pod permissions so users no longer got root access by default. By the end I had over 70 pull requests merged, wrote the release notes for Fission 1.16, and published two tutorials on the Fission blog: <a href="https://fission.io/blog/autoscaling-serverless-functions-with-custom-metrics/" target="_blank" rel="noopener">autoscaling with custom metrics</a> and <a href="https://fission.io/blog/serverless-kafka-consumer-for-confluent-cloud/" target="_blank" rel="noopener">Kafka on Confluent Cloud</a>.</p>
-          <div class="tags"><span>Go</span><span>Kubernetes</span><span>Prometheus</span><span>Helm</span><span>AWS S3</span></div>
-        </div></article>
-
-        <article class="card"><div class="card-body">
-          <div class="card-top"><span class="name">GitHub Externship</span><span class="dots"></span><span class="aside">2021</span></div>
-          <div class="sub">Open source extern · Fission</div>
-          <p>This is where I got into open source. I built a connector that lets Fission functions be triggered by messages on a Redis queue, which was merged into the project. I also set up its automated testing with GitHub Actions and wrote the documentation, with examples so others could start using it.</p>
-          <div class="tags"><span>Go</span><span>Redis</span><span>KEDA</span><span>GitHub Actions</span></div>
-        </div></article>
+          <article class="card"><div class="card-body">
+            <div class="card-top"><span class="name">InfraCloud</span><span class="aside">2021 – 2022</span></div>
+            <div class="sub">Software Engineer Intern · Fission</div>
+            <p>Worked full time on <a href="https://fission.io" target="_blank" rel="noopener">Fission</a>, after starting there as a GitHub extern.</p>
+            <ul class="points">
+              <li>60+ pull requests merged, from new features to bug fixes</li>
+              <li>Rebuilt its Prometheus monitoring and added the <code>fission archive</code> command</li>
+              <li>Built a Redis queue connector and wrote two posts for the Fission blog</li>
+            </ul>
+            <div class="tags"><span>Go</span><span>Kubernetes</span><span>Prometheus</span><span>Helm</span></div>
+          </div></article>
+        </div>
+        <div class="car-nav">
+          <button type="button" class="car-btn prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <span class="car-count" aria-live="polite">1 / 1</span>
+          <button type="button" class="car-btn next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
         </div>
       </section>
 
       <section id="projects" class="reveal">
         <h2>Projects</h2>
-        <div class="projects">
-          <article class="card">
-            <div class="term" aria-hidden="true">
-              <div class="term-bar"><i></i><i></i><i></i></div>
-<pre><span class="p">$</span> vin init
-<span class="c"># start tracking this folder</span>
-<span class="p">$</span> vin commit -m "First version"
-<span class="c"># snapshot everything, no staging step</span>
-<span class="p">$</span> vin log
-<span class="c"># walk the history back from HEAD</span></pre>
-            </div>
-            <div class="card-body">
-              <div class="card-top"><a class="name" href="https://github.com/blackfly19/vinyl" target="_blank" rel="noopener">Vinyl</a><span class="dots"></span><span class="aside">In progress</span></div>
-              <p>A version control system I'm building from scratch to understand how Git works under the hood. Files are stored by the hash of their contents, so identical files are only ever saved once, and each commit is a Merkle tree whose single root hash fingerprints the whole project. I left out Git's staging area to keep it simple: <code>vin commit</code> just saves whatever is in the folder.</p>
-              <div class="tags"><span>Go</span><span>Cobra</span></div>
-            </div>
-          </article>
+        <div class="carousel" data-carousel>
+        <div class="track" tabindex="0" aria-label="Projects, scroll sideways for more">
+          <article class="card"><div class="card-body">
+              <div class="card-top"><a class="name" href="https://github.com/blackfly19/vinyl" target="_blank" rel="noopener">Vinyl</a><span class="aside">In progress</span></div>
+              <p>A version control system I'm building from scratch to learn how Git works underneath.</p>
+              <ul class="points">
+                <li>Stores files by the hash of their contents, so nothing is saved twice</li>
+                <li>Each commit is a Merkle tree, so one hash fingerprints the whole project</li>
+              </ul>
+              <div class="tags"><span>Go</span></div>
+            </div></article>
 
-          <article class="card">
-            <div class="term" aria-hidden="true">
-              <div class="term-bar"><i></i><i></i><i></i></div>
-<pre><span class="p">$</span> easypdf convert -d notes/ -o report.pdf --toc
-<span class="c"># every Markdown file in notes/ → one PDF with a contents page</span>
-<span class="p">$</span> easypdf convert -f intro.md -c cover.md -o guide.pdf -w
-<span class="c"># add a cover page and rebuild on every save</span></pre>
-            </div>
-            <div class="card-body">
-              <div class="card-top"><a class="name" href="https://github.com/blackfly19/easypdf" target="_blank" rel="noopener">EasyPDF</a><span class="dots"></span><span class="aside">26 ★</span></div>
-              <p>A command-line tool that turns one or more Markdown files into a single, clean PDF. It can add a cover page, a table of contents and your own styling, and a watch mode rebuilds the PDF as you edit. I built it for writing reports, and other people ended up finding it useful too.</p>
-              <div class="tags"><span>Go</span><span>wkhtmltopdf</span></div>
-            </div>
-          </article>
+          <article class="card"><div class="card-body">
+              <div class="card-top"><a class="name" href="https://github.com/blackfly19/MCBA-Internet-Banking" target="_blank" rel="noopener">MCBA Internet Banking</a></div>
+              <p>An internet banking platform built as three connected apps sharing one database.</p>
+              <ul class="points">
+                <li>Customer site for transfers, statements and scheduled bill payments</li>
+                <li>Admin portal that works only through a secured REST API</li>
+              </ul>
+              <div class="tags"><span>C#</span><span>ASP.NET Core</span><span>SQL Server</span></div>
+            </div></article>
 
-          <article class="card">
-            <div class="card-body">
-              <div class="card-top"><a class="name" href="https://github.com/blackfly19/Xeno" target="_blank" rel="noopener">Xeno</a><span class="dots"></span><span class="aside">2020</span></div>
-              <p>The backend for a social app I built in college that matched students with shared interests for short, anonymous chats. Everyone signed up with their college email and a face check, so every person on the app was a verified student.</p>
-              <div class="tags"><span>Python</span></div>
-            </div>
-          </article>
+          <article class="card"><div class="card-body">
+              <div class="card-top"><a class="name" href="https://github.com/blackfly19/music-subscription-app" target="_blank" rel="noopener">Music Subscription App</a></div>
+              <p>A web app to search a music catalogue and subscribe to songs.</p>
+              <ul class="points">
+                <li>The same code runs as a normal server or as a serverless AWS Lambda</li>
+                <li>DynamoDB for users and subscriptions, S3 for artist images</li>
+              </ul>
+              <div class="tags"><span>Java</span><span>Spring Boot</span><span>AWS</span></div>
+            </div></article>
+
+          <article class="card"><div class="card-body">
+              <div class="card-top"><a class="name" href="https://github.com/blackfly19/easypdf" target="_blank" rel="noopener">EasyPDF</a><span class="aside">26 ★</span></div>
+              <p>A command-line tool that turns Markdown files into one clean PDF.</p>
+              <ul class="points">
+                <li>Adds a cover page, table of contents and custom styling</li>
+                <li>Watch mode rebuilds the PDF as you edit</li>
+              </ul>
+              <div class="tags"><span>Go</span><span>CLI</span></div>
+            </div></article>
+
+          <article class="card"><div class="card-body">
+              <div class="card-top"><a class="name" href="https://github.com/blackfly19/Xeno" target="_blank" rel="noopener">Xeno</a><span class="aside">2020</span></div>
+              <p>The backend for a college mobile app that paired students with shared interests for short, anonymous chats.</p>
+              <ul class="points">
+                <li>Real-time chat with Flask-SocketIO, plus Celery workers for background jobs</li>
+                <li>Sign-up checked with a college email and Azure's face recognition</li>
+              </ul>
+              <div class="tags"><span>Python</span><span>Flask</span><span>PostgreSQL</span><span>Redis</span><span>Celery</span></div>
+            </div></article>
+        </div>
+        <div class="car-nav">
+          <button type="button" class="car-btn prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <span class="car-count" aria-live="polite">1 / 1</span>
+          <button type="button" class="car-btn next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
         </div>
       </section>
-
 
       <section id="skills" class="reveal">
         <h2>Skills</h2>
         <div class="skills">
           <div class="skill-row">
             <h3>Languages</h3>
-            <div class="chips"><span>Go</span><span>Java</span><span>Python</span><span>C#</span><span>SQL</span><span>C</span></div>
+            <div class="chips"><span>Go</span><span>Java</span><span>Python</span><span>C#</span><span>SQL</span></div>
           </div>
           <div class="skill-row">
             <h3>Backend</h3>
-            <div class="chips"><span>Spring Boot</span><span>.NET</span><span>Flask</span><span>REST APIs</span></div>
+            <div class="chips"><span>Spring Boot</span><span>ASP.NET Core</span><span>Flask</span><span>REST APIs</span></div>
           </div>
           <div class="skill-row">
-            <h3>Cloud &amp; DevOps</h3>
-            <div class="chips"><span>AWS</span><span>Kubernetes</span><span>Docker</span><span>Helm</span><span>Prometheus</span><span>GitHub Actions</span></div>
+            <h3>Cloud</h3>
+            <div class="chips"><span>AWS</span><span>Kubernetes</span><span>Docker</span><span>Helm</span><span>GitHub Actions</span></div>
           </div>
           <div class="skill-row">
             <h3>Data</h3>
-            <div class="chips"><span>PostgreSQL</span><span>MongoDB</span><span>Redis</span><span>RabbitMQ</span><span>Kafka</span><span>Impala</span><span>Spark</span><span>Hadoop</span></div>
+            <div class="chips"><span>PostgreSQL</span><span>SQL Server</span><span>DynamoDB</span><span>Redis</span><span>Kafka</span><span>Spark</span></div>
           </div>
           <div class="skill-row">
             <h3>AI</h3>
             <div class="chips"><span>LLM agents</span><span>Prompt engineering</span></div>
-          </div>
-          <div class="skill-row">
-            <h3>Tools</h3>
-            <div class="chips"><span>Git</span><span>Linux</span><span>Vim</span><span>Jira</span></div>
           </div>
         </div>
       </section>
@@ -559,11 +631,11 @@
       <section id="education" class="reveal">
         <h2>Education</h2>
         <div class="entry">
-          <div class="entry-top"><span class="name">RMIT University</span><span class="dots"></span><span class="aside">2024 – 2026</span></div>
-          <div class="sub">Master of Information Technology · Melbourne · GPA 3.8 / 4.0</div>
+          <div class="entry-top"><span class="name">RMIT University</span><span class="aside">2024 – 2026</span></div>
+          <div class="sub">Master of Information Technology · GPA 3.8 / 4.0</div>
         </div>
         <div class="entry">
-          <div class="entry-top"><span class="name">Manipal Institute of Technology</span><span class="dots"></span><span class="aside">India</span></div>
+          <div class="entry-top"><span class="name">Manipal Institute of Technology</span><span class="aside">India</span></div>
           <div class="sub">Bachelor of Technology</div>
         </div>
       </section>
@@ -698,6 +770,35 @@
             status.innerHTML = 'Something went wrong. You can email me directly at <a href="mailto:ankitc226@gmail.com">ankitc226@gmail.com</a>.';
           })
           .finally(function () { btn.disabled = false; });
+      });
+    })();
+
+    // Swipeable rows: arrow buttons, counter, keyboard
+    (function () {
+      document.querySelectorAll("[data-carousel]").forEach(function (car) {
+        var track = car.querySelector(".track");
+        var cards = track.children;
+        var prev = car.querySelector(".prev"), next = car.querySelector(".next");
+        var count = car.querySelector(".car-count");
+        function step() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth; }
+        function index() { return Math.min(cards.length - 1, Math.round(track.scrollLeft / step())); }
+        function update() {
+          var i = index();
+          var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+          count.textContent = (atEnd ? cards.length : i + 1) + " / " + cards.length;
+          prev.disabled = track.scrollLeft <= 4;
+          next.disabled = atEnd;
+        }
+        function go(dir) { track.scrollBy({ left: dir * step(), behavior: "smooth" }); }
+        prev.addEventListener("click", function () { go(-1); });
+        next.addEventListener("click", function () { go(1); });
+        track.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+          if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+        });
+        track.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
       });
     })();
 
